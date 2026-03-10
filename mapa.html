@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Mapa projektu</title>
+
+<script src="https://unpkg.com/@panzoom/panzoom/dist/panzoom.min.js"></script>
+
+<style>
+
+body{
+font-family: Arial;
+margin:0;
+background:#f0f0f0;
+}
+
+#login{
+display:flex;
+height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+}
+
+#mapContainer{
+display:none;
+width:100vw;
+height:100vh;
+overflow:hidden;
+cursor:grab;
+}
+
+#map{
+width:2000px;
+height:1200px;
+position:relative;
+}
+
+.node{
+position:absolute;
+width:220px;
+padding:12px;
+background:white;
+border-radius:8px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.node h3{
+margin:0 0 5px 0;
+font-size:16px;
+}
+
+.node p{
+margin:0;
+font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="login">
+
+<h2>Dostęp do mapy projektu</h2>
+
+<input id="password" type="password" placeholder="hasło">
+<button onclick="check()">Wejdź</button>
+
+<p id="error" style="color:red"></p>
+
+</div>
+
+<div id="mapContainer">
+
+<div id="map">
+
+<div class="node" style="top:200px;left:300px">
+<h3>Hipoteza</h3>
+<p>Wstępne założenie projektu badawczego.</p>
+</div>
+
+<div class="node" style="top:400px;left:700px">
+<h3>Metodologia</h3>
+<p>Plan badań i metoda analizy danych.</p>
+</div>
+
+<div class="node" style="top:150px;left:900px">
+<h3>Próba badawcza</h3>
+<p>Kryteria włączenia i wyłączenia uczestników.</p>
+</div>
+
+<div class="node" style="top:600px;left:500px">
+<h3>Analiza danych</h3>
+<p>Model statystyczny i plan interpretacji.</p>
+</div>
+
+</div>
+</div>
+
+
+<script>
+
+const PASSWORD="badanie123";
+
+function check(){
+
+const input=document.getElementById("password").value;
+
+if(input===PASSWORD){
+
+document.getElementById("login").style.display="none";
+document.getElementById("mapContainer").style.display="block";
+
+const elem=document.getElementById('map');
+const panzoom=Panzoom(elem,{maxScale:5,minScale:0.3});
+
+document.getElementById('mapContainer').addEventListener('wheel',panzoom.zoomWithWheel);
+
+}
+else{
+
+document.getElementById("error").innerText="Błędne hasło";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
